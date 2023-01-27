@@ -10,7 +10,7 @@ sequenceDiagram
     palvelin-->>selain: "HTTP Status 302, location /notes"
     deactivate palvelin
     Note right of selain: Selain suorittaa uuden HTTP GET pyynnnön kohteeseen /notes
-    selain-->>palvelin:GTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+    selain-->>palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
     activate palvelin
     palvelin-->>selain: HTML-tiedosto
     deactivate palvelin
