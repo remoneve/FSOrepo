@@ -19,32 +19,37 @@ const App = () => {
   }, [search]
   )
 
+  /* handlers */
+  const handleSearchChange = (event) => setSearch(event.target.value)
+
+  /* set countrys name to searchbar by pressing show */
+  const selectCountry = (country) => {
+    setSearch(country.name.common.toLowerCase())
+  }
+
+  /* return the size of countries after searching */
   const size = (countries) => {
     if (countries) return countries.length
     return 0
-  }
-
-  /* handlers */
-  const handleSearchChange = (event) => {
-    console.log(event.target.value)
-    setSearch(event.target.value)
   }
 
   return (
     <div>
       <SearchBar search={search} handler={handleSearchChange}/>
       <ListCountries countries={FilterCountries(search, countries)} 
-      size={size(FilterCountries(search, countries))} />
+      size={size(FilterCountries(search, countries))} onButtonPress={selectCountry} />
     </div>
   )
 }
 
+/* searchbar */
 const SearchBar = ({search, handler}) => {
   return (
     <p>find countries <input value={search} onChange={handler}/></p>
   )
 }
 
+/* filter countries by search */
 const FilterCountries = (search, countries) => {
   if (!countries) return null
 
@@ -54,7 +59,8 @@ const FilterCountries = (search, countries) => {
   return (filteredList)
 }
 
-const ListCountries = ({countries, size}) => {
+/* show countries as a list */
+const ListCountries = ({countries, size, onButtonPress}) => {
   if (!countries || size >= 10 || size <= 0) {
     return (
       <div>Too many matches, specify another filter</div>
@@ -62,12 +68,13 @@ const ListCountries = ({countries, size}) => {
   }
   return (
     <div>
-      {countries.map(country => <PrintCountry key={country.name.common} country={country} size={size}/>)}
+      {countries.map(country => <PrintCountry key={country.name.common} country={country} size={size} onButtonPress={onButtonPress} />)}
     </div>
   )
 }
 
-const PrintCountry = ({country, size}) => {
+/* print information of one country or many countries names */
+const PrintCountry = ({country, size, onButtonPress}) => {
   const languages = Object.keys(country.languages).map((key) => country.languages[key])
 
   if (size === 1) {
@@ -83,7 +90,7 @@ const PrintCountry = ({country, size}) => {
     )
   }
   return (
-    <p>{country.name.common} <button>show</button></p>
+    <p>{country.name.common} <button onClick={() => onButtonPress(country)}>show</button></p>
   )
 }
 
