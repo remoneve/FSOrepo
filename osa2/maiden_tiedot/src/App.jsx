@@ -23,12 +23,14 @@ const App = () => {
   )
 
   useEffect(() => {
-    console.log('fetching weather...')
-    axios
-      .get(url)
-      .then(response => {
-        setWeatherData(response.data)
-    })
+    if (capital) {
+      console.log('fetching weather...')
+      axios
+        .get(url)
+        .then(response => {
+          setWeatherData(response.data)
+      })
+    }
   }, [capital]
   )
 
