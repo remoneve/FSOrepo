@@ -44,9 +44,14 @@ const App = () => {
           setNewName('')
           setNewNumber('')
           setActionMessage(`Edited ${newPerson.name}`)
-          setTimeout(() => {
-            setActionMessage(null)
-          }, 5000)
+          setIsError(false)
+          setTimeout(() => {setActionMessage(null)}, 5000)
+        })
+        .catch(error => {
+          console.log(error.response.data.error)
+          setIsError(true)
+          setActionMessage(error.response.data.error)
+          setTimeout(() => { setActionMessage(null) }, 5000)
         })
       }
     }
@@ -58,10 +63,17 @@ const App = () => {
           setPeople(people.concat(response.data))
           setNewName('')
           setNewNumber('')
+          setIsError(false)
           setActionMessage(`${newPerson.name} added`)
           setTimeout(() => {
             setActionMessage(null)
           }, 5000)
+        })
+        .catch(error => {
+          console.log(error.response.data.error)
+          setIsError(true)
+          setActionMessage(error.response.data.error)
+          setTimeout(() => { setActionMessage(null) }, 5000)
         })
         }
     }
@@ -74,15 +86,15 @@ const App = () => {
       .then(console.log(`Deleted ${person.name}`))
       .then(() => {
         setPeople(people.filter(person => person.id !== deletedId))
+        setIsError(false)
         setActionMessage(`${person.name} removed`)
         setTimeout(() => { setActionMessage(null) }, 5000)
       })
-
       .catch(() => {
         setActionMessage(`${person.name} has already been removed from server`)
+        setIsError(true)
         setPeople(people.filter(person => person.id !== deletedId))
         setTimeout(() => { setActionMessage(null) }, 5000)
-        setIsError(true)
       })
     }     
   }
