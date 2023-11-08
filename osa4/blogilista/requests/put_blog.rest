@@ -2,8 +2,5 @@ PUT http://localhost:3003/api/blogs/6545ffcd9ae9457616c06c25
 Content-Type: application/json
 
 {
-    "title": "Rahasäiliö",
-    "author": "Aku Ankka",
-    "url": "www.google.com",
-    "likes": "7"
+    "likes": "111"
 }

@@ -34,6 +34,12 @@ describe('Testing get(ting) blogs', () => {
       'Formula 1'
       )
   })
+
+  test('identifying blogs is done with ids', async () => {
+    const response = await api.get('/api/blogs')
+    
+    expect(response.body[0].id).toBeDefined()
+  })
 })
 
 describe('Post(ing) blogs to DB', () => {
@@ -143,17 +149,26 @@ describe('Id(entifying blogs)', () => {
   
     expect(titles).not.toContain(blogToDelete.title)
   })
-  
-  test('identifying blogs is done with ids', async () => {
-    const response = await api.get('/api/blogs')
-    
-    expect(response.body[0].id).toBeDefined()
-  })
 })
 
 describe('Editing blogs', () => {
   test('likes of a blog can be edited', async () => {
-    
+    const blogsAtStart = await helper.blogsInDb()
+
+    const blogToCompare = blogsAtStart[0]
+    const oldLikes = blogToCompare.likes
+  
+    const newBlog = {
+      likes: oldLikes * 2
+    }
+
+    await api
+      .put(`/api/blogs/${blogToCompare.id}`)
+      .send(newBlog)
+      .expect(200)
+  
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd[0].likes).toBe(oldLikes * 2)
   })
 })
 
