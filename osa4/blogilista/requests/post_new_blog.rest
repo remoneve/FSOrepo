@@ -1,10 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJlbW9uZXZlIiwiaWQiOiI2NTUxZGY4MzllN2Y5NjM0NjIxMzRhMjMiLCJpYXQiOjE2OTk4ODUzNDEsImV4cCI6MTY5OTg4ODk0MX0.0c2sf-cIElZ0OjsNJuBzmdb-GZlA5g3opAmcF1GywHU
 
 {
     "title": "Rahasäiliö",
     "author": "Aku Ankka",
     "url": "www.google.com",
-    "likes": "500",
-    "userId": "654d1f83ce57b717ab52942b"
+    "likes": "500"
 }

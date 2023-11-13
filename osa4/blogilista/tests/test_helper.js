@@ -2,18 +2,18 @@ const Blog = require('../models/blog')
 const User = require('../models/user')
 
 const initialBlogs = [
-    {
-        title: "Frisbeegolf",
-        author: "Paul McBeth",
-        url: "www.discgolfnetwork.com",
-        likes: 200
-      }, 
-      {
-        title: "Formula 1",
-        author: "James Hunt",
-        url: "www.formula1.com",
-        likes: 10
-      }
+  {
+    title: 'Frisbeegolf',
+    author: 'Paul McBeth',
+    url: 'www.discgolfnetwork.com',
+    likes: 200
+  },
+  {
+    title: 'Formula 1',
+    author: 'James Hunt',
+    url: 'www.formula1.com',
+    likes: 10
+  }
 ]
 
 const nonExistingId = async () => {
@@ -35,8 +35,8 @@ const usersInDb = async () => {
 }
 
 module.exports = {
-  initialBlogs, 
-  nonExistingId, 
+  initialBlogs,
+  nonExistingId,
   blogsInDb,
   usersInDb
 }

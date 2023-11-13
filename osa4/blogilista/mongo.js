@@ -14,22 +14,22 @@ mongoose.set('strictQuery',false)
 mongoose.connect(url)
 
 const blogSchema = new mongoose.Schema({
-    title: String,
-    author: String,
-    url: String,
-    likes: Number
-  })
-  
+  title: String,
+  author: String,
+  url: String,
+  likes: Number
+})
+
 const Blog = mongoose.model('Blog', blogSchema)
 
 const blog = new Blog({
-    title: "Rahasäiliö 2",
-    author: "Aku Ankka",
-    url: "www.google.com",
-    likes: 10
+  title: 'Rahasäiliö 2',
+  author: 'Aku Ankka',
+  url: 'www.google.com',
+  likes: 10
 })
 
-blog.save().then(result => {
+blog.save().then(() => {
   console.log('blog saved!')
   mongoose.connection.close()
 })
