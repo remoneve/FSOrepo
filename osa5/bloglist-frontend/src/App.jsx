@@ -93,7 +93,7 @@ const App = () => {
 
   const blogForm = () => {
     return (
-      <Togglable buttonLabel='show' ref={blogFromRef}>
+      <Togglable buttonLabel='create new blog' ref={blogFromRef}>
         <BlogForm createBlog={addBlog} setIsError={setIsError} setMessage={setMessage}/>
       </Togglable>
     )
@@ -103,9 +103,7 @@ const App = () => {
     return(
       <div>
         <h2>log in to application</h2>
-
         <Notification message={message} error={isError}/>
-
         {!user && loginForm()}
       </div>
     )
@@ -114,11 +112,8 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
-
       <Notification message={message} error={isError}/>
-
       <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
-      
       <h2>create new</h2>
       {blogForm()}
       {blogs.map(blog =>
