@@ -1,6 +1,6 @@
 # FSOrepo
 
-Exercises ->
+Tehtävät ->
 
 osa0 6/6  
 osa1 14/14  
