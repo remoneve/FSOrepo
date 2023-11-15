@@ -36,7 +36,7 @@ const App = () => {
 
     try {
       const user = await loginService.login({
-        username, password,
+        username, password
       })
 
       window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
@@ -117,7 +117,7 @@ const App = () => {
       <h2>create new</h2>
       {blogForm()}
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} user={user}/>
       )}
     </div>
   )
