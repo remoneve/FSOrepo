@@ -67,6 +67,22 @@ const App = () => {
     setBlogs(blogs.concat(returnedBlog))
   }
 
+  const updateBlog = async (blogObject) => {
+    const id = blogObject.id
+
+    await blogService.update(id, blogObject)
+    setBlogs(blogs.map(blog => blog.id !== id ? blog : blogObject))
+  }
+
+  const removeBlog = async (blogObject) => {
+    const id = blogObject.id
+
+    if (window.confirm(`Remove blog "${blogObject.title}" by ${blogObject.author}`)) {
+      await blogService.remove(id, blogObject)
+      setBlogs(blogs.filter(blog => blog.id !== id))
+    }
+  }
+
   const loginForm = () => (
     <form onSubmit={handleLogin}>
     <div>
@@ -94,9 +110,15 @@ const App = () => {
   const blogForm = () => {
     return (
       <Togglable buttonLabel='create new blog' ref={blogFromRef}>
+        <h2>create new</h2>
         <BlogForm createBlog={addBlog} setIsError={setIsError} setMessage={setMessage}/>
       </Togglable>
     )
+  }
+
+  const sortBlogs = (blogs) => {
+    const unsortedblogs = blogs.map(blog => <Blog key={blog.id} blog={blog} user={user} updateBlog={updateBlog} removeBlog={removeBlog} />)
+    return unsortedblogs.sort((a, b) => b.props.blog.likes - a.props.blog.likes)
   }
 
   if (user === null) {
@@ -114,11 +136,8 @@ const App = () => {
       <h2>blogs</h2>
       <Notification message={message} error={isError}/>
       <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
-      <h2>create new</h2>
       {blogForm()}
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} user={user}/>
-      )}
+      {sortBlogs(blogs)}
     </div>
   )
 }

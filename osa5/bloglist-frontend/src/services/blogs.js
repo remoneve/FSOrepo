@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios'
 const baseUrl = 'http://localhost:3003/api/blogs'
 
@@ -18,7 +19,22 @@ const create = async newObject => {
   }
 
   const response = await axios.post(baseUrl, newObject, config)
-  return await response.data
+  return response.data
 }
 
-export default { getAll, create, setToken, }
+const update = async (id, newBlog) => {
+
+  const response = await axios.put(`${baseUrl}/${id}`, newBlog)
+  return response.data
+}
+
+const remove = async (id) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  const response = await axios.delete(`${baseUrl}/${id}`, config)
+  return response.data
+}
+
+export default { getAll, create, setToken, update, remove }
