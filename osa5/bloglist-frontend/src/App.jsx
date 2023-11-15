@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
+import BlogForm from './components/BlogForm'
+import Togglable from './components/Toggable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
-  const [newUrl, setNewUrl] = useState('')
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [message, setMessage] = useState(null)
   const [isError, setIsError] = useState(false)
+  const blogFromRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -47,9 +47,9 @@ const App = () => {
     } 
     catch (exception) {
       setIsError(true)
-      setErrorMessage('wrong credentials')
+      setMessage('wrong credentials')
       setTimeout(() => {
-        setErrorMessage(null)
+        setMessage(null)
       }, 5000)
     }
   }
@@ -61,34 +61,10 @@ const App = () => {
     window.localStorage.removeItem('loggedBlogappUser')
   }
 
-  const handleTitleChange = (event) => {
-    setNewTitle(event.target.value)
-  }
-
-  const handleAuthorChange = (event) => {
-    setNewAuthor(event.target.value)
-  }
-
-  const handleUrlChange = (event) => {
-    setNewUrl(event.target.value)
-  }
-
-  const addBlog = async (event) => {
-    event.preventDefault()
-    console.log('adding a new blog with', newTitle, newAuthor, newUrl)
-
-    const blogObject = {
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl,
-    }
-
+  const addBlog = async (blogObject) => {
+    blogFromRef.current.toggleVisibility()
     const returnedBlog = await blogService.create(blogObject)
-      
     setBlogs(blogs.concat(returnedBlog))
-    setNewTitle('')
-    setNewAuthor('')
-    setNewUrl('')
   }
 
   const loginForm = () => (
@@ -115,21 +91,20 @@ const App = () => {
   </form>  
   )
 
-  const blogForm = () => (
-    <form onSubmit={addBlog}>
-      <div>title: <input value={newTitle} onChange={handleTitleChange}/></div>
-      <div>author: <input value={newAuthor} onChange={handleAuthorChange}/></div>
-      <div>url: <input value={newUrl} onChange={handleUrlChange}/></div>
-      <button type="submit">save</button>
-    </form>
-  )
+  const blogForm = () => {
+    return (
+      <Togglable buttonLabel='show' ref={blogFromRef}>
+        <BlogForm createBlog={addBlog} setIsError={setIsError} setMessage={setMessage}/>
+      </Togglable>
+    )
+  }
 
   if (user === null) {
     return(
       <div>
         <h2>log in to application</h2>
 
-        <Notification message={errorMessage} error={isError}/>
+        <Notification message={message} error={isError}/>
 
         {!user && loginForm()}
       </div>
@@ -140,7 +115,7 @@ const App = () => {
     <div>
       <h2>blogs</h2>
 
-      <Notification message={errorMessage} error={isError}/>
+      <Notification message={message} error={isError}/>
 
       <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
       
