@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
@@ -16,9 +17,12 @@ const App = () => {
   const blogFromRef = useRef()
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
+    const fetchBlogs = async () => {
+      const blogs = await blogService.getAll()
+      setBlogs(blogs)
+    }
+    
+    fetchBlogs()
   }, [])
 
   useEffect(() => {
@@ -63,8 +67,9 @@ const App = () => {
 
   const addBlog = async (blogObject) => {
     blogFromRef.current.toggleVisibility()
-    const returnedBlog = await blogService.create(blogObject)
-    setBlogs(blogs.concat(returnedBlog))
+    const newBlog = await blogService.create(blogObject)
+    blogObject.id = newBlog.id
+    setBlogs(blogs.concat(blogObject))
   }
 
   const updateBlog = async (blogObject) => {
@@ -111,7 +116,7 @@ const App = () => {
     return (
       <Togglable buttonLabel='create new blog' ref={blogFromRef}>
         <h2>create new</h2>
-        <BlogForm createBlog={addBlog} setIsError={setIsError} setMessage={setMessage}/>
+        <BlogForm createBlog={addBlog} setIsError={setIsError} setMessage={setMessage} user={user}/>
       </Togglable>
     )
   }

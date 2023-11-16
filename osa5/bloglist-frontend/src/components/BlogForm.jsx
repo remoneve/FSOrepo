@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const BlogForm = ({ createBlog, setIsError, setMessage }) => {
+const BlogForm = ({ createBlog, setIsError, setMessage, user }) => {
     const [newTitle, setNewTitle] = useState('')
     const [newAuthor, setNewAuthor] = useState('')
     const [newUrl, setNewUrl] = useState('')
@@ -9,11 +9,13 @@ const BlogForm = ({ createBlog, setIsError, setMessage }) => {
         event.preventDefault()
         console.log('adding a new blog with', newTitle, newAuthor, newUrl)
 
+        console.log(user)
         try {
             await createBlog({
                 title: newTitle,
                 author: newAuthor,
                 url: newUrl,
+                user: user
             })
       
             setIsError(false)
