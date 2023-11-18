@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
@@ -21,7 +20,7 @@ const App = () => {
       const blogs = await blogService.getAll()
       setBlogs(blogs)
     }
-    
+
     fetchBlogs()
   }, [])
 
@@ -48,7 +47,7 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
-    } 
+    }
     catch (exception) {
       setIsError(true)
       setMessage('wrong credentials')
@@ -90,26 +89,26 @@ const App = () => {
 
   const loginForm = () => (
     <form onSubmit={handleLogin}>
-    <div>
+      <div>
       username
         <input
-        type="text"
-        value={username}
-        name="Username"
-        onChange={({ target }) => setUsername(target.value)}
-      />
-    </div>
-    <div>
+          type="text"
+          value={username}
+          name="Username"
+          onChange={({ target }) => setUsername(target.value)}
+        />
+      </div>
+      <div>
       password
-        <input 
-        type="password"
-        value={password}
-        name="Password"
-        onChange={({ target }) => setPassword(target.value)}
-      />
-    </div>
-    <button type="submit">login</button>
-  </form>  
+        <input
+          type="password"
+          value={password}
+          name="Password"
+          onChange={({ target }) => setPassword(target.value)}
+        />
+      </div>
+      <button type="submit">login</button>
+    </form>
   )
 
   const blogForm = () => {
