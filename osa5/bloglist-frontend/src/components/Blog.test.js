@@ -5,78 +5,60 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
 
-test('renders title and author, separated by a', () => {
-  const blog = {
-    title: 'Testing components',
-    author: 'Tester Person',
-    url: 'www.nourl.com',
-    likes: 15,
-    user: ({
-      username: 'testuser',
-      name: 'testuser'
-    })
-  }
+const user = {
+  username: 'testuser',
+  name: 'testuser'
+}
 
-  const { container }= render(<Blog blog={blog}/>)
+const blog = {
+  title: 'Testing components',
+  author: 'Tester Person',
+  url: 'www.nourl.com',
+  likes: 15,
+  user: user
+}
 
-  const div = container.querySelector('.blog')
-  expect(div).toHaveTextContent('Testing components, Tester Person')
+describe('testing titles and other text', () => {
+  beforeEach(() => {
+    render(<Blog blog={blog} user={user} updateBlog={() => {}} removeBlog={() => {}}/>)
+  })
+  
+  test('a title and an author are rendered', () => {
+    screen.getByText('Testing components, Tester Person')
+  })
+  
+  test('url or likes are not rendered', async () => {
+    const element = await screen.findByTestId('showInfo')
+    expect(element).toHaveStyle('display: none')
+  })
+  
+  test('url, likes and name of user are rendered after clicking "show"', async () => {
+    const user = userEvent.setup()
+    const showButton = screen.getByText('View')
+  
+    await user.click(showButton)
+  
+    const element = await screen.findByTestId('showInfo')
+    screen.getByText('www.nourl.com')
+    screen.getByText('likes 15')
+    screen.getByText('testuser')
+  })
 })
 
-/*test('renders url, likes and a user, after pressing show', async () => {
-    const blog = {
-      title: 'Testing buttons',
-      author: 'Silly Tester',
-      url: 'www.tested.com',
-      likes: 300,
-      user: ({
-        username: 'test',
-        name: 'tester'
-      })
-    }
+test('clicking like twice causes two calls', async () => {
+  const mockHandler = jest.fn()
+
+  render(<Blog blog={blog} user={user} updateBlog={mockHandler} removeBlog={() => {}}/>)
   
-    const appUser = {
-        username: 'test',
-        name: 'tester'
-    }
+  const renderUser = userEvent.setup()
 
-    const mockHandler = jest.fn()
-  
-    const { container } = render(<Blog blog={blog} toggleVisibility={mockHandler} user={appUser} />)
+  const showButton = screen.getByText('View')
+  await renderUser.click(showButton)
 
-    screen.debug(container)
+  const likeButton = screen.getByText('like')
 
-    const user = userEvent.setup()
-    const button = screen.getByText('view')
-    await user.click(button)
+  await renderUser.click(likeButton)
+  await renderUser.click(likeButton)
 
-    screen.getByText('www.tested.com')
-    screen.getByText('likes 300')
-  })
-
-/*test('clicking the button calls event handler once', async () => {
-    const testUser = {
-        username: 'test',
-        name: 'tester'
-      }
-    
-    const blog = {
-        title: 'Testing buttons',
-        author: 'Incredible Tester',
-        url: 'www.test.com',
-        likes: 0,
-        user: testUser
-      }
-  
-    const mockHandler = jest.fn()
-  
-    render(
-        <Blog blog={blog} toggleVisibility={mockHandler} user={testUser} />
-    )
-
-    const user = userEvent.setup()
-    const button = screen.getByText('view')
-    await user.click(button)
-  
-    expect(mockHandler.mock.calls).toHaveLength(1)
-  }) */
+  expect(mockHandler).toBeCalledTimes(2)
+})
