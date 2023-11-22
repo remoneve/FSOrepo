@@ -40,9 +40,9 @@ const BlogForm = ({ createBlog, setIsError, setMessage, user }) => {
   return (
     <div>
       <form onSubmit={addBlog}>
-        <div>title: <input value={newTitle} onChange={event => setNewTitle(event.target.value)}/></div>
-        <div>author: <input value={newAuthor} onChange={event => setNewAuthor(event.target.value)}/></div>
-        <div>url: <input value={newUrl} onChange={event => setNewUrl(event.target.value)}/></div>
+        <div>title: <input value={newTitle} onChange={event => setNewTitle(event.target.value)} data-testid="title"/></div>
+        <div>author: <input value={newAuthor} onChange={event => setNewAuthor(event.target.value)} data-testid="author"/></div>
+        <div>url: <input value={newUrl} onChange={event => setNewUrl(event.target.value)} data-testid="url"/></div>
         <button type="submit">save</button>
       </form>
     </div>
