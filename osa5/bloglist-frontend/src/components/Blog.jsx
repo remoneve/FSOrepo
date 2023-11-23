@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import blogService from '../services/blogs'
 
-const Blog = ({ blog, user, updateBlog, removeBlog }) => {
+const Blog = ({ blog, user, removeBlog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -12,6 +13,7 @@ const Blog = ({ blog, user, updateBlog, removeBlog }) => {
   const [visible, setVisible] = useState(false)
   const [showRemove, setShowRemove] = useState(true)
   const [infoButton, setInfoButton] = useState('View')
+  const [likes, setLikes] = useState(blog.likes)
 
   const infoVisible = { display: visible ? '' : 'none' }
 
@@ -33,17 +35,11 @@ const Blog = ({ blog, user, updateBlog, removeBlog }) => {
     else setShowRemove(false)
   }
 
-  const addLike = () => {
-    const newBlog = ({
-      title: blog.title,
-      author: blog.author,
-      url: blog.url,
-      likes: blog.likes + 1,
-      user: blog.user,
-      id: blog.id
-    })
+  const addLike = async () => {
+    blog.likes += 1
 
-    updateBlog(newBlog)
+    await blogService.update(blog.id, blog)
+    setLikes(blog.likes)
   }
 
   const handleRemove = () => {
@@ -54,11 +50,11 @@ const Blog = ({ blog, user, updateBlog, removeBlog }) => {
     <div style={blogStyle}>
       <div>
         {blog.title}, {blog.author}
-        <button onClick={toggleVisibility}>{infoButton}</button>
+        <button id="view-button" onClick={toggleVisibility}>{infoButton}</button>
       </div>
       <div data-testid="showInfo" style={infoVisible}>
         <div>{blog.url}</div>
-        <div>likes {blog.likes} <button onClick={addLike}>like</button></div>
+        <div>likes {blog.likes} <button id="like-button" onClick={addLike}>like</button></div>
         <div>{blog.user.name || user.name}</div>
         <div style={removeVisible}><button onClick={handleRemove}>remove</button></div>
       </div>

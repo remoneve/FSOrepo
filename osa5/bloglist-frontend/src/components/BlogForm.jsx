@@ -9,12 +9,12 @@ const BlogForm = ({ createBlog, setIsError, setMessage, user }) => {
     event.preventDefault()
     console.log('adding a new blog with', newTitle, newAuthor, newUrl)
 
-    console.log(user)
     try {
       await createBlog({
         title: newTitle,
         author: newAuthor,
         url: newUrl,
+        likes: 0,
         user: user
       })
 
@@ -31,7 +31,7 @@ const BlogForm = ({ createBlog, setIsError, setMessage, user }) => {
     }
     catch (exception) {
       setIsError(true)
-      setMessage('title or url missing')
+      setMessage(exception.message)
       setTimeout(() => {
         setMessage(null)
       }, 5000)
@@ -40,10 +40,10 @@ const BlogForm = ({ createBlog, setIsError, setMessage, user }) => {
   return (
     <div>
       <form onSubmit={addBlog}>
-        <div>title: <input value={newTitle} onChange={event => setNewTitle(event.target.value)} data-testid="title"/></div>
-        <div>author: <input value={newAuthor} onChange={event => setNewAuthor(event.target.value)} data-testid="author"/></div>
-        <div>url: <input value={newUrl} onChange={event => setNewUrl(event.target.value)} data-testid="url"/></div>
-        <button type="submit">save</button>
+        <div>title: <input id="title" value={newTitle} onChange={event => setNewTitle(event.target.value)} data-testid="title"/></div>
+        <div>author: <input id="author" value={newAuthor} onChange={event => setNewAuthor(event.target.value)} data-testid="author"/></div>
+        <div>url: <input id="url" value={newUrl} onChange={event => setNewUrl(event.target.value)} data-testid="url"/></div>
+        <button id="save-button" type="submit">save</button>
       </form>
     </div>
   )

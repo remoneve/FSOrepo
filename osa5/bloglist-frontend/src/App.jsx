@@ -71,13 +71,6 @@ const App = () => {
     setBlogs(blogs.concat(blogObject))
   }
 
-  const updateBlog = async (blogObject) => {
-    const id = blogObject.id
-
-    await blogService.update(id, blogObject)
-    setBlogs(blogs.map(blog => blog.id !== id ? blog : blogObject))
-  }
-
   const removeBlog = async (blogObject) => {
     const id = blogObject.id
 
@@ -92,6 +85,7 @@ const App = () => {
       <div>
       username
         <input
+          id='username'
           type="text"
           value={username}
           name="Username"
@@ -101,13 +95,14 @@ const App = () => {
       <div>
       password
         <input
+          id='password'
           type="password"
           value={password}
           name="Password"
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button type="submit">login</button>
+      <button id="login-button" type="submit">login</button>
     </form>
   )
 
@@ -121,7 +116,7 @@ const App = () => {
   }
 
   const sortBlogs = (blogs) => {
-    const unsortedblogs = blogs.map(blog => <Blog key={blog.id} blog={blog} user={user} updateBlog={updateBlog} removeBlog={removeBlog} />)
+    const unsortedblogs = blogs.map(blog => <Blog key={blog.id} blog={blog} user={user} removeBlog={removeBlog} />)
     return unsortedblogs.sort((a, b) => b.props.blog.likes - a.props.blog.likes)
   }
 
