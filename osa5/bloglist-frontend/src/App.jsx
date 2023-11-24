@@ -71,12 +71,22 @@ const App = () => {
     setBlogs(blogs.concat(blogObject))
   }
 
+  const updateBlogs = async () => {
+    const blogs = await blogService.getAll()
+    setBlogs(blogs)
+  }
+
   const removeBlog = async (blogObject) => {
     const id = blogObject.id
 
     if (window.confirm(`Remove blog "${blogObject.title}" by ${blogObject.author}`)) {
       await blogService.remove(id, blogObject)
       setBlogs(blogs.filter(blog => blog.id !== id))
+      setIsError(false)
+      setMessage(`Removed blog "${blogObject.title}" by ${blogObject.author}`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
     }
   }
 
@@ -116,7 +126,7 @@ const App = () => {
   }
 
   const sortBlogs = (blogs) => {
-    const unsortedblogs = blogs.map(blog => <Blog key={blog.id} blog={blog} user={user} removeBlog={removeBlog} />)
+    const unsortedblogs = blogs.map(blog => <Blog key={blog.id} blog={blog} user={user} updateBlogs={updateBlogs} removeBlog={removeBlog} />)
     return unsortedblogs.sort((a, b) => b.props.blog.likes - a.props.blog.likes)
   }
 
@@ -134,7 +144,7 @@ const App = () => {
     <div>
       <h2>blogs</h2>
       <Notification message={message} error={isError}/>
-      <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
+      <p>{user.name} logged in <button id="logout-button" onClick={handleLogout}>logout</button></p>
       {blogForm()}
       {sortBlogs(blogs)}
     </div>
