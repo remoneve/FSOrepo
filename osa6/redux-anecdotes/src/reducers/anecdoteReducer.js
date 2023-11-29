@@ -1,6 +1,6 @@
 /* eslint-disable */
 const anecdotesAtStart = { 
-  notes: [
+  anecdotes: [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
   'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
@@ -9,7 +9,6 @@ const anecdotesAtStart = {
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ], filter: '' 
 }
-
 
 const getId = () => (100000 * Math.random()).toFixed(0)
 
@@ -21,7 +20,7 @@ const asObject = (anecdote) => {
   }
 }
 
-const initialState = anecdotesAtStart.map(asObject)
+const initialState = anecdotesAtStart.anecdotes.map(asObject)
 
 const anecdoteReducer = (state = initialState, action) => {
   console.log('state now: ', state)
@@ -39,15 +38,6 @@ const anecdoteReducer = (state = initialState, action) => {
     case 'NEW_ANEC':
       return state.concat(action.payload)
     default: return state
-  }
-}
-
-const filterReducer = (state = '', action) => {
-  switch(action.type) {
-    case 'SET_FILTER':
-      return action.payload
-    default:
-      return state
   }
 }
 
