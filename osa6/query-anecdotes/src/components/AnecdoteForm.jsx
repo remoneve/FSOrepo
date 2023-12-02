@@ -10,6 +10,11 @@ const AnecdoteForm = () => {
     mutationFn: createAnecdote,
     onSuccess: () => { 
       queryClient.invalidateQueries('anecdotes')
+    },
+    onError: () => {
+      dispatch({
+        type: 'ERROR'
+      })
     }
   })
   
@@ -21,13 +26,10 @@ const AnecdoteForm = () => {
     dispatch({
       type: 'ADD',
       payload: {
-        content: content,
-        votes: 0
+        content: content
       }
     })
-    //setTimeout(() => dispatch({type: 'CLEAR'}), 5000)
   }
-
 
   return (
     <div>
