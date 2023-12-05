@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link, useParams } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link, useParams, useNavigate } from 'react-router-dom'
 
 const Menu = () => {
   const padding = {
@@ -36,7 +36,7 @@ const Anecdote = ({ anecdotes }) => {
     <div>
       <h2>{anecdote.content} by {anecdote.author}</h2>
       <div>has {anecdote.votes} votes</div>
-      <div>for more info see <Link to={`${anecdote.info}`}>{anecdote.info}</Link></div>
+      <div>for more info see <a href={`${anecdote.info}`}>{anecdote.info}</a> </div>
     </div>
   )
 }
@@ -68,6 +68,7 @@ const CreateNew = (props) => {
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
 
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -77,6 +78,12 @@ const CreateNew = (props) => {
       info,
       votes: 0
     })
+
+    props.setNotification(`a new anecdote ${content} created!`)
+    setContent('')
+    setAuthor('')
+    setInfo('')
+    navigate('/')
   }
 
   return (
@@ -99,7 +106,18 @@ const CreateNew = (props) => {
       </form>
     </div>
   )
+}
 
+const Notification = ({ message, setNotification }) => {
+  if (message.length > 0) {
+    setTimeout(() => setNotification(''), 5000)
+  }
+
+  return (
+    <div>
+      {message}
+    </div>
+  )
 }
 
 const App = () => {
@@ -145,11 +163,12 @@ const App = () => {
     <Router>
       <h1>Software anecdotes</h1>
       <Menu />
+      <Notification message={notification} setNotification={setNotification}/>
 
       <Routes>
         <Route path="/anecdotes/:id" element={<Anecdote anecdotes={anecdotes} />} />
         <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
-        <Route path="/create" element={<CreateNew addNew={addNew} />} />
+        <Route path="/create" element={<CreateNew addNew={addNew} setNotification={setNotification} />} />
         <Route path="/about" element={<About />} />
       </Routes>
       
