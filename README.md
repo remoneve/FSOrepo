@@ -8,4 +8,5 @@ part2 20/20
 part3 22/22  
 part4 23/23  
 part5 23/23  
-part6 19/24  
+part6 24/24  
+part7 3/21  
