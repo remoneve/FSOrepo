@@ -13,9 +13,9 @@ interface Values {
   target: number;
 }
 
-type Operation = 'trainingDays' | 'rating';
-
-const calculateExercises = (hours: number[], target: number): Result => {
+export const calculateExercises = (hours: number[], target: number): Result => {
+  type Operation = 'trainingDays' | 'rating';
+  
   const calcAvg = (hours: number[]) => {
     let avg = 0;
     for (let i = 0; i < hours.length; i++) {
