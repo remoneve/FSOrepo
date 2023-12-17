@@ -3,17 +3,20 @@ interface BmiValues {
   weight: number;
 }
 
-const calculateBmi = (height: number, weight: number) => {
+export const calculateBmi = (height: number, weight: number) => {
   const bmi = weight/Math.pow(height/100, 2);
 
   if (bmi < 18.5) return 'Underweight (low weight)';
   if (bmi > 18.5 && bmi < 25 ) return 'Normal (healthy weight)';
   if (bmi > 25 ) return 'Overweight (high weight)';
+  else {
+    throw new Error('An error occurred')
+  }
 }
 
 const parseMeasurements = (args: string[]): BmiValues => {
-  if (args.length < 4) throw new Error('Not enough arguments!')
-  if (args.length > 4) throw new Error('Too many arguments!')
+  if (args.length < 4) throw new Error('Not enough arguments!');
+  if (args.length > 4) throw new Error('Too many arguments!');
 
   if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
     return {
@@ -21,7 +24,7 @@ const parseMeasurements = (args: string[]): BmiValues => {
       weight: Number(args[3])
     }
   } else {
-    throw new Error('Provided values are not numbers!')
+    throw new Error('Provided values are not numbers!');
   }
 }
 
@@ -35,3 +38,5 @@ try {
   }
   console.log(errorMessage + ' (should be 2)');
 }
+
+export default { calculateBmi, parseMeasurements };

@@ -27,7 +27,7 @@ const calculateExercises = (hours: number[], target: number): Result => {
   const calculator = (hours: number[], target: number, op: Operation) => {
     switch(op) {
       case 'trainingDays':
-        var days = 0
+        var days = 0;
         for (var i = 0; i < hours.length; i++) {
           if (hours[i] > 0) days += 1;
         }
@@ -36,7 +36,7 @@ const calculateExercises = (hours: number[], target: number): Result => {
         const average = calcAvg(hours);
         if (average > target) return 3;
         else if (average < target && average > target - 1) return 2;
-        else if (average < target - 1) return 1;
+        else return 1;
       }
     }
     
@@ -54,6 +54,8 @@ const calculateExercises = (hours: number[], target: number): Result => {
         return 'great';
       case 3:
         return 'excellent';
+      default:
+        return 'no rating';
     }
   }
 
@@ -69,20 +71,20 @@ const calculateExercises = (hours: number[], target: number): Result => {
 }
 
 const parseExcercises = (args: string[]): Values => {
-  if (args.length < 4) throw new Error('Not enough arguments!')
+  if (args.length < 4) throw new Error('Not enough arguments!');
 
   if (!isNaN(Number(args[2]))) {
-    var hourList = []
+    var hourList = [];
     for (var i = 3; i < args.length; i++) {
-      if (isNaN(Number(args[i]))) throw new Error('Arguments need to be numbers!')
-      hourList.push(Number(args[i]))
+      if (isNaN(Number(args[i]))) throw new Error('All arguments need to be numbers!');
+      hourList.push(Number(args[i]));
     }
-
     return {
       target: Number(args[2]),
       hours: hourList,
     }
   }
+  else throw new Error ('Arguments need to be numbers!');
 }
 
 try {
