@@ -7,9 +7,9 @@ app.get('/hello', (_req, res) => {
 });
 
 app.get('/bmi', (req, res) => {
-  const height = Number(req.query.height)
-  const weight = Number(req.query.weight)
-  const result = calculateBmi(height, weight)
+  const height = Number(req.query.height);
+  const weight = Number(req.query.weight);
+  const result = calculateBmi(height, weight);
   
   res.json({"weight": weight, "height": height, "bmi": result});
 });

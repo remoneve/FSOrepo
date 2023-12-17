@@ -39,4 +39,4 @@ try {
   console.log(errorMessage + ' (should be 2)');
 }
 
-export default { calculateBmi, parseMeasurements };
+export default { calculateBmi };
