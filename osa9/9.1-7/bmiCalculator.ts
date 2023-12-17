@@ -10,9 +10,9 @@ export const calculateBmi = (height: number, weight: number) => {
   if (bmi > 18.5 && bmi < 25 ) return 'Normal (healthy weight)';
   if (bmi > 25 ) return 'Overweight (high weight)';
   else {
-    throw new Error('An error occurred')
+    throw new Error('An error occurred');
   }
-}
+};
 
 const parseMeasurements = (args: string[]): BmiValues => {
   if (args.length < 4) throw new Error('Not enough arguments!');
@@ -22,11 +22,11 @@ const parseMeasurements = (args: string[]): BmiValues => {
     return {
       height: Number(args[2]),
       weight: Number(args[3])
-    }
+    };
   } else {
     throw new Error('Provided values are not numbers!');
   }
-}
+};
 
 try {
   const { height, weight } = parseMeasurements(process.argv);
@@ -38,5 +38,3 @@ try {
   }
   console.log(errorMessage + ' (should be 2)');
 }
-
-export default { calculateBmi };

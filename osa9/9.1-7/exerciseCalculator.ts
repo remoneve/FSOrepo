@@ -17,18 +17,18 @@ type Operation = 'trainingDays' | 'rating';
 
 const calculateExercises = (hours: number[], target: number): Result => {
   const calcAvg = (hours: number[]) => {
-    var avg = 0;
-    for (var i = 0; i < hours.length; i++) {
+    let avg = 0;
+    for (let i = 0; i < hours.length; i++) {
       avg += hours[i];
     }
     return avg / hours.length;
-  }
+  };
 
   const calculator = (hours: number[], target: number, op: Operation) => {
     switch(op) {
       case 'trainingDays':
-        var days = 0;
-        for (var i = 0; i < hours.length; i++) {
+        let days = 0;
+        for (let i = 0; i < hours.length; i++) {
           if (hours[i] > 0) days += 1;
         }
         return days;
@@ -38,13 +38,13 @@ const calculateExercises = (hours: number[], target: number): Result => {
         else if (average < target && average > target - 1) return 2;
         else return 1;
       }
-    }
+    };
     
   const setSuccess = (hours: number[], target: number): boolean => {
     const average = calcAvg(hours);
     if (average > target) return true;
     else return false;
-  }
+  };
 
   const setRatingDesc = (rating: number): string => {
     switch(rating) {
@@ -57,7 +57,7 @@ const calculateExercises = (hours: number[], target: number): Result => {
       default:
         return 'no rating';
     }
-  }
+  };
 
   return {
     periodLength: hours.length,
@@ -67,25 +67,25 @@ const calculateExercises = (hours: number[], target: number): Result => {
     ratingDescription: setRatingDesc(calculator(hours, target, 'rating')),
     target: target,
     average: calcAvg(hours)
-  }
-}
+  };
+};
 
 const parseExcercises = (args: string[]): Values => {
   if (args.length < 4) throw new Error('Not enough arguments!');
 
   if (!isNaN(Number(args[2]))) {
-    var hourList = [];
-    for (var i = 3; i < args.length; i++) {
+    const hourList = [];
+    for (let i = 3; i < args.length; i++) {
       if (isNaN(Number(args[i]))) throw new Error('All arguments need to be numbers!');
       hourList.push(Number(args[i]));
     }
     return {
       target: Number(args[2]),
       hours: hourList,
-    }
+    };
   }
   else throw new Error ('Arguments need to be numbers!');
-}
+};
 
 try {
   const { hours, target } = parseExcercises(process.argv);
