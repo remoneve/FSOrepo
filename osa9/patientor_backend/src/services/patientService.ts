@@ -11,7 +11,6 @@ const getNonSsnPatients = (): NonSsnPatientEntry[] => {
 };
 
 const addPatient = ( entry: NewPatientEntry ): PatientEntry => {
-  
   const newPatientEntry = {
     id: (patients.length + 1).toString(),
     ...entry

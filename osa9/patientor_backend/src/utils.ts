@@ -1,8 +1,13 @@
-import { PatientEntry } from "./types";
+import { NewPatientEntry } from "./types";
 
-const toNewPatient = (object): PatientEntry => {
-  const newEntry: PatientEntry = {
-    //
+const toNewPatient = (object: unknown): NewPatientEntry => {
+  console.log(object);
+  const newEntry: NewPatientEntry = {
+    name: "string",
+    dateOfBirth: "string",
+    ssn: "string",
+    gender: "string",
+    occupation: "string"
   };
 
   return newEntry;

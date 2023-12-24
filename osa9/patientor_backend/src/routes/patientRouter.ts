@@ -27,9 +27,9 @@ router.post('/', (req, res) => {
     const addedPatient = patientService.addPatient(newPatientEntry);
     res.json(addedPatient);
   } catch (error: unknown) {
-    let errorMessage = 'Something went wrong.';
+    let errorMessage = '';
     if (error instanceof Error) {
-      errorMessage += ' Error: ' + error.message;
+      errorMessage = error.message;
     }
     res.status(400).send(errorMessage);
   }
