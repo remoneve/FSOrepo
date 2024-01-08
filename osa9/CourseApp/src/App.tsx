@@ -24,6 +24,7 @@ const App = () => {
   return (
     <div>
       <Header name={courseName} />
+      <Content users={courseParts} />
       <p>
         {courseParts[0].name} {courseParts[0].exerciseCount}
       </p>
@@ -33,6 +34,7 @@ const App = () => {
       <p>
         {courseParts[2].name} {courseParts[2].exerciseCount}
       </p>
+      <Total parts={courseParts} />
       <p>
         Number of exercises {totalExercises}
       </p>
