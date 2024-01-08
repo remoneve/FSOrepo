@@ -1,4 +1,4 @@
-interface ContentProps {
+interface TotalProps {
   courseParts: Part[]
 }
 
@@ -7,7 +7,7 @@ interface Part {
   excerciseCount: number,
 }
 
-const Total = (props: ContentProps) => {
+const Total = (props: TotalProps) => {
   const totalExercises = props.reduce((sum, part) => sum + part.exerciseCount, 0);
   
   return (
