@@ -1,27 +1,27 @@
-interface UserListProps {
-  users: User[];
+interface CourseListProps {
+  courses: Course[];
 }
 
-interface User {
+interface Course {
   name: string;
-  excerciseCount: number;
+  exerciseCount: number;
 }
 
-const CoursePartItem = (props: User) => {
+const CoursePartItem = ({name, exerciseCount}: Course) => {
   return (
     <p>
-      {props.name} {props.excerciseCount}
+      {name} {exerciseCount}
     </p>
-  )
-}
+  );
+};
 
-const UsersList = (props: UserListProps) => {
+const Content = ({courses}: CourseListProps) => {
   return (
     <div>
-      {props.users.map(({name, excerciseCount}) => 
-      (<CoursePartItem name={name} excerciseCount={excerciseCount}/>))}
+      {courses.map(({name, exerciseCount}) => 
+      (<CoursePartItem key={name} name={name} exerciseCount={exerciseCount}/>))}
     </div>
-  )
-}
+  );
+};
 
-export default UsersList
+export default Content;

@@ -1,14 +1,14 @@
-interface TotalProps {
-  courseParts: Part[]
+interface CourseListProps {
+  courses: Course[];
 }
 
-interface Part {
-  name: string,
-  excerciseCount: number,
+interface Course {
+  name: string;
+  exerciseCount: number;
 }
 
-const Total = (props: TotalProps) => {
-  const totalExercises = props.reduce((sum, part) => sum + part.exerciseCount, 0);
+const Total = ({courses}: CourseListProps) => {
+  const totalExercises = courses.reduce((sum, part) => sum + part.exerciseCount, 0);
   
   return (
     <div>
@@ -16,7 +16,7 @@ const Total = (props: TotalProps) => {
         Number of exercises {totalExercises}
       </p>
     </div>
-  )
-}
+  );
+};
 
-export default Total
+export default Total;

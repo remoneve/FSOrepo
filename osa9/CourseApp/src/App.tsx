@@ -19,25 +19,11 @@ const App = () => {
     }
   ];
 
-  const totalExercises = courseParts.reduce((sum, part) => sum + part.exerciseCount, 0);
-
   return (
     <div>
       <Header name={courseName} />
-      <Content users={courseParts} />
-      <p>
-        {courseParts[0].name} {courseParts[0].exerciseCount}
-      </p>
-      <p>
-        {courseParts[1].name} {courseParts[1].exerciseCount}
-      </p>
-      <p>
-        {courseParts[2].name} {courseParts[2].exerciseCount}
-      </p>
-      <Total parts={courseParts} />
-      <p>
-        Number of exercises {totalExercises}
-      </p>
+      <Content courses={courseParts} />
+      <Total courses={courseParts} />
     </div>
   );
 };
