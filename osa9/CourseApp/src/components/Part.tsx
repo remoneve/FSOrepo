@@ -8,31 +8,40 @@ const Part = (props: Course) => {
   const content = props.content
 
   switch (content.kind) {
-    case "basic":
-      return (
-        <div>
-          <div>{content.name} {content.exerciseCount}</div>
-          <div>{content.description}</div>
-          <br/>
-        </div>
-      )
-    case "background":
-      return (
+  case "basic":
+    return (
       <div>
-        <div>{content.name} {content.exerciseCount}</div>
-        <div>{content.description}</div>
+        <div><b>{content.name} {content.exerciseCount}</b></div>
+        <div><i>{content.description}</i></div>
+        <br/>
+      </div>
+    )
+  case "background":
+    return (
+      <div>
+        <div><b>{content.name} {content.exerciseCount}</b></div>
+        <div><i>{content.description}</i></div>
         <div>Submit to {content.backgroundMaterial}</div>
         <br/>
       </div>
-      )
-    case "group":
-      return (
+    )
+  case "group":
+    return (
       <div>
-        <div>{content.name} {content.exerciseCount}</div>
+        <div><b>{content.name} {content.exerciseCount}</b></div>
         <div>project exercises {content.groupProjectCount}</div>
         <br/>
       </div>
-      )
+    )
+  case "special":
+    return (
+      <div>
+        <div><b>{content.name} {content.exerciseCount}</b></div>
+        <div><i>{content.description}</i></div>
+        <div>required skills: {content.requirements.join(', ')}</div>
+        <br/>
+      </div>
+    )
   }
 };
 
