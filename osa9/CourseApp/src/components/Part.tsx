@@ -15,7 +15,7 @@ const Part = (props: Course) => {
         <div><i>{content.description}</i></div>
         <br/>
       </div>
-    )
+    );
   case "background":
     return (
       <div>
@@ -24,7 +24,7 @@ const Part = (props: Course) => {
         <div>Submit to {content.backgroundMaterial}</div>
         <br/>
       </div>
-    )
+    );
   case "group":
     return (
       <div>
@@ -32,7 +32,7 @@ const Part = (props: Course) => {
         <div>project exercises {content.groupProjectCount}</div>
         <br/>
       </div>
-    )
+    );
   case "special":
     return (
       <div>
@@ -41,7 +41,7 @@ const Part = (props: Course) => {
         <div>required skills: {content.requirements.join(', ')}</div>
         <br/>
       </div>
-    )
+    );
   };
 };
 
