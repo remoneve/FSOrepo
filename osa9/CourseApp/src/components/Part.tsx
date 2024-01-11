@@ -1,11 +1,11 @@
 import { CoursePart } from "../types";
 
 interface Course {
-  content: CoursePart
+  content: CoursePart;
 }
 
 const Part = (props: Course) => {
-  const content = props.content
+  const content = props.content;
 
   switch (content.kind) {
   case "basic":
@@ -42,7 +42,7 @@ const Part = (props: Course) => {
         <br/>
       </div>
     )
-  }
+  };
 };
 
-export default Part
+export default Part;

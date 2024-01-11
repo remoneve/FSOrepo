@@ -6,7 +6,7 @@ interface CourseList {
 }
 
 const Content = (props: CourseList) => {
-  const courses = props.courses
+  const courses = props.courses;
   return (
     <div>
       {courses.map((course) => 
