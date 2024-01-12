@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { getDiaries, postDiaryEntry } from "./services/diaryService";
 import { DiaryEntry } from "./types";
 import Diary from "./components/Diary";
+import axios from "axios";
+import ErrorDisplay from "./components/ErrorDisplay";
 
 const App = () => {
   const [diaries, setDiaries] = useState<DiaryEntry[]>([]);
@@ -9,6 +11,7 @@ const App = () => {
   const [newWeather, setNewWeather] = useState('');
   const [newVisibility, setNewVisibility] = useState('');
   const [newComment, setNewComment] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     getDiaries().then(data => {
@@ -16,7 +19,7 @@ const App = () => {
     });
   }, []);
 
-  const createEntry = (event: React.SyntheticEvent) => {
+  const createEntry = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     const entryToAdd = {
       id: diaries.length + 1,
@@ -26,21 +29,27 @@ const App = () => {
       comment: newComment,
     };
 
-    postDiaryEntry(entryToAdd)
-      .then(data => { 
-        setDiaries(diaries.concat(data));
-      });
+    try {
+      const response = await postDiaryEntry(entryToAdd);
+      setDiaries(diaries.concat(response));
 
-    setNewDate('');
-    setNewVisibility('');
-    setNewWeather('');
-    setNewComment('');
+      setNewDate('');
+      setNewVisibility('');
+      setNewWeather('');
+      setNewComment('');
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        setErrorMessage(error.response!.data);
+        setTimeout(() => setErrorMessage(''), 5000);
+      }
+    }
   };
 
   return (
     <div>
       <form onSubmit={createEntry}>
         <h2>Add a new diary</h2>
+        <ErrorDisplay errorMessage={errorMessage}/>
         date <input value={newDate} onChange={(event) => setNewDate(event.target.value)}/> <br/>
         visibility <input value={newVisibility} onChange={(event) => setNewVisibility(event.target.value)}/> <br/>
         weather <input value={newWeather} onChange={(event) => setNewWeather(event.target.value)}/> <br/>
