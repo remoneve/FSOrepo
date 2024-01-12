@@ -20,7 +20,7 @@ module.exports = {
       "error",
       { "argsIgnorePattern": "^_" }
     ],
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    "indent": ["error", 2]
   },
-  "indent": ["error", 2]
 }
