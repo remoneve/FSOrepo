@@ -34,8 +34,6 @@ const App = () => {
       setDiaries(diaries.concat(response));
 
       setNewDate('');
-      setNewVisibility('');
-      setNewWeather('');
       setNewComment('');
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -54,7 +52,7 @@ const App = () => {
           date <input type="date" value={newDate} onChange={(event) => setNewDate(event.target.value)}/>
         </div>
         <div>
-          visibility 
+          visibility:
           <input type="radio" id="vis1" name="visibility" value={"great"} onChange={(event) => setNewVisibility(event.target.value)}></input>
           <label htmlFor="vis1">great</label>
 
@@ -68,7 +66,7 @@ const App = () => {
           <label htmlFor="vis4">poor</label>
         </div>
         <div>
-          weather
+          weather:
           <input type="radio" id="weather1" name="weather" value={"sunny"} onChange={(event) => setNewWeather(event.target.value)}></input>
           <label htmlFor="weather1">sunny</label>
 
