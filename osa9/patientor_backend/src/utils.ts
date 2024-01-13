@@ -41,7 +41,7 @@ const isDateofBirth = (dateOfBirth: string): boolean => {
 
 const parseDateOfBirth = (dateOfBirth: unknown): string => {
   if (!isString(dateOfBirth) || !isDateofBirth(dateOfBirth)) {
-      throw new Error('Incorrect or missing date: ' + dateOfBirth);
+    throw new Error('Incorrect or missing date: ' + dateOfBirth);
   }
   return dateOfBirth;
 };

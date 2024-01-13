@@ -8,14 +8,15 @@ const getPatients = (): PatientEntry[] => {
 
 const getNonSsnPatients = (): NonSsnPatientEntry[] => {
   return patients.map(({ id, name, dateOfBirth, gender, occupation }) => 
-  ({ id, name, dateOfBirth, gender, occupation }));
+    ({ id, name, dateOfBirth, gender, occupation }));
 };
 
 const addPatient = ( entry: NewPatientEntry ): PatientEntry => {
   const id = uuid();
   const newPatientEntry = {
     id: id,
-    ...entry
+    ...entry,
+    entries: []
   };
 
   patients.push(newPatientEntry);
