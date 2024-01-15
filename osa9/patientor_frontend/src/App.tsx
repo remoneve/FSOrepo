@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Route, Link, Routes, useMatch } from "react-router-dom";
+import { Route, Link, Routes } from "react-router-dom";
 import { Button, Divider, Container, Typography } from '@mui/material';
 
 import { apiBaseUrl } from "./constants";
@@ -12,10 +12,7 @@ import PatientDetails from "./components/PatientDetails";
 
 const App = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
-  const match = useMatch('/patients/:id');
-  const matchedPatient = match 
-    ? patients.find(patient => patient.id === String(match.params.id)) 
-    : null;
+  const [currentPatient, setCurrentPatient] = useState<string>("d2773c6e-f723-11e9-8f0b-362b9e155667");
 
   useEffect(() => {
     void axios.get<void>(`${apiBaseUrl}/ping`);
@@ -38,8 +35,8 @@ const App = () => {
           </Button>
           <Divider hidden />
           <Routes>
-            <Route path="/" element={<PatientListPage patients={patients} setPatients={setPatients} />} />
-            <Route path="patients/:id" element={<PatientDetails data={matchedPatient}/>}/>
+            <Route path="/" element={<PatientListPage patients={patients} setPatients={setPatients} setCurrentPatient={setCurrentPatient}/>} />
+            <Route path="patients/:id" element={<PatientDetails id={currentPatient}/>}/>
           </Routes>
         </Container>
     </div>

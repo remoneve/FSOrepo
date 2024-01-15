@@ -1,11 +1,19 @@
 import { Patient } from "../types";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-interface PatientDataTypes {
-  data: Patient | null | undefined;
+interface PatientData {
+  id: string
 }
 
-const PatientDetails = (props: PatientDataTypes) => {
-  const patient = props.data;
+const PatientDetails = (props: PatientData) => {
+  const [patient, setPatient] = useState<Patient>();
+  
+  useEffect(() => {
+    axios
+      .get<Patient>(`http://localhost:3001/api/patients/${props.id}`)
+      .then((res) => setPatient(res.data));
+  }, [props.id]);
 
   if (!patient) {
     return (
