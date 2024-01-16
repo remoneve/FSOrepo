@@ -1,6 +1,7 @@
 import { Patient } from "../../types";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Entries from "./Entries";
 
 interface PatientData {
   id: string
@@ -28,6 +29,7 @@ const PatientDetails = (props: PatientData) => {
       <p>occupation: {patient.occupation}</p>
       <p>ssn {patient.ssn}</p>
       <p>Date of birth: {patient.dateOfBirth}</p>
+      <Entries entries={patient.entries} />
     </div>
   );
 };

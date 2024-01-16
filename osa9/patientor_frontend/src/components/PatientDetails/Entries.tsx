@@ -1,6 +1,16 @@
-import { BaseEntry, Patient } from "../../types";
+import { Diagnosis, BaseEntry } from "../../types";
 
-const Entry = ({ date, description, diagnosisCodes}: BaseEntry) => {
+interface Entry {
+  date: string,
+  description: string,
+  diagnosisCodes?: Array<Diagnosis['code']>;
+}
+
+interface props {
+  entries : BaseEntry[]
+}
+
+const Entry = ({ date, description, diagnosisCodes}: Entry) => {
   if (!diagnosisCodes) {
     return (
       <div>
@@ -13,19 +23,27 @@ const Entry = ({ date, description, diagnosisCodes}: BaseEntry) => {
     <div>
       {date} <i>{description}</i>
       <ul>
-        <li>{diagnosisCodes.map(diag => diag)}</li>
+        {diagnosisCodes.map(diagnosis => <li key={diagnosis}>{diagnosis}</li>)}
       </ul>
     </div>
   );
 };
 
-const Entries = (patient: Patient) => {
+const Entries = ({entries}: props) => {
+  if (entries.length < 1) {
+    return (
+      <div>
+        <h2>entries</h2>
+        <b><i>No entries found</i></b>
+      </div>
+    );
+  }
+  
   return (
     <div>
       <h2>entries</h2>
-      {patient.entries.map(entry => <Entry key={entry.id}
-      id={entry.id}
-      specialist={entry.specialist} 
+      {entries.map(entry => 
+      <Entry key={entry.date}
       date={entry.date} 
       diagnosisCodes={entry.diagnosisCodes}
       description={entry.description}/>)}
