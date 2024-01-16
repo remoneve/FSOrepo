@@ -8,11 +8,11 @@ import { Patient } from "./types";
 
 import patientService from "./services/patients";
 import PatientListPage from "./components/PatientListPage";
-import PatientDetails from "./components/PatientDetails";
+import PatientDetails from "./components/PatientDetails/PatientDetails";
 
 const App = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
-  const [currentPatient, setCurrentPatient] = useState<string>("d2773c6e-f723-11e9-8f0b-362b9e155667");
+  const [currentPatient, setCurrentPatient] = useState<string>('');
 
   useEffect(() => {
     void axios.get<void>(`${apiBaseUrl}/ping`);
