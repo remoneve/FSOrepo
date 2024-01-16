@@ -12,7 +12,7 @@ import PatientDetails from "./components/PatientDetails/PatientDetails";
 
 const App = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
-  const [currentPatient, setCurrentPatient] = useState<string>('');
+  const [currentPatientId, setCurrentPatientId] = useState<string>('');
 
   useEffect(() => {
     void axios.get<void>(`${apiBaseUrl}/ping`);
@@ -35,8 +35,8 @@ const App = () => {
           </Button>
           <Divider hidden />
           <Routes>
-            <Route path="/" element={<PatientListPage patients={patients} setPatients={setPatients} setCurrentPatient={setCurrentPatient}/>} />
-            <Route path="patients/:id" element={<PatientDetails id={currentPatient}/>}/>
+            <Route path="/" element={<PatientListPage patients={patients} setPatients={setPatients} setCurrentPatientId={setCurrentPatientId}/>} />
+            <Route path="patients/:id" element={<PatientDetails id={currentPatientId}/>}/>
           </Routes>
         </Container>
     </div>

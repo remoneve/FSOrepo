@@ -7,14 +7,14 @@ interface PatientData {
   id: string
 }
 
-const PatientDetails = (props: PatientData) => {
+const PatientDetails = ({id}: PatientData) => {
   const [patient, setPatient] = useState<Patient>();
   
   useEffect(() => {
     axios
-      .get<Patient>(`http://localhost:3001/api/patients/${props.id}`)
+      .get<Patient>(`http://localhost:3001/api/patients/${id}`)
       .then((res) => setPatient(res.data));
-  }, [props.id]);
+  }, [id]);
 
   if (!patient) {
     return (
@@ -29,6 +29,7 @@ const PatientDetails = (props: PatientData) => {
       <p>occupation: {patient.occupation}</p>
       <p>ssn {patient.ssn}</p>
       <p>Date of birth: {patient.dateOfBirth}</p>
+
       <Entries entries={patient.entries} />
     </div>
   );
