@@ -1,7 +1,7 @@
 import { Patient } from "../../types";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Entries from "./Entries";
+import PatientEntries from "./PatientEntries";
 
 interface PatientData {
   id: string
@@ -30,7 +30,7 @@ const PatientDetails = ({id}: PatientData) => {
       <p>ssn {patient.ssn}</p>
       <p>Date of birth: {patient.dateOfBirth}</p>
 
-      <Entries entries={patient.entries} />
+      <PatientEntries entries={patient.entries} />
     </div>
   );
 };
