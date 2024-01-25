@@ -93,7 +93,7 @@ const CreateNew = (props) => {
   return (
     <div>
       <h2>create a new anecdote</h2>
-      <form onSubmit={handleSubmit}>
+      <form >
         <div>
           content
           <input {...content.input} />
@@ -106,7 +106,7 @@ const CreateNew = (props) => {
           url for more info
           <input {...info.input} />
         </div>
-        <button type="submit">create</button>
+        <button onClick={handleSubmit}>create</button>
         <button onClick={handleReset}>reset</button>
       </form>
     </div>
